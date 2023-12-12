@@ -1,10 +1,9 @@
-Blockbuster
+Blockbuster (development branch)
 ===========
 A python varitation of the game Pixel Breakout
 
 
-Blockbuster is a simple python variation of the game
-Pixel Breakout. It uses the pygame library, which may
-not be installed on your device. To install it, install
-python and pip and type "pip install pygame".
+This is the development branch of the Blockbuster project.
+This directory is a W.I.P, so it's probably best if you
+use the master branch version.
 
