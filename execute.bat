@@ -1,1 +1,1 @@
-cd python\PixelBreakout
+python main.py

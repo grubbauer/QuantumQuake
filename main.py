@@ -4,6 +4,7 @@ tmp = 1
 # Importing the librarys
 import os
 import sys
+import time
 import pygame
 import pygame.mixer as mixer 
 
@@ -34,6 +35,8 @@ playertexture = pygame.transform.scale(playertexture, (128, 128))
 background = pygame.image.load("resources/sprites/background/Sprite-0001-test.png")
 background = pygame.transform.scale(background,(WIDTH, HEIGHT)) 
 bricktext = pygame.image.load("resources/sprites/brick/Sprite-0001-test.png")
+basesetuptext = pygame.image.load("resources/sprites/background/Sprite-0003-test.png")
+startbutton = pygame.image.load("resources/sprites/buttons/Sprite-0001-test.png")
 mixer.music.load("resources/audio/mainms.wav")
 
 # The CLOCK
@@ -54,8 +57,31 @@ ball_color = (255, 0, 0)  # Red.
 
 ball_x = WIDTH // 2
 ball_y = HEIGHT // 2
-ball_speed_x = 5
-ball_speed_y = 5
+ball_speed_x = 10
+ball_speed_y = 10
+
+logotime = True
+if logotime:
+        screen.fill(WHITE)
+        screen.blit(basesetuptext, (0, 0))
+        pygame.display.flip()
+        time.sleep(1.5)
+        pygame.display.flip()
+        startbutton_rect = pygame.Rect(150, 50, 512, 512)
+        screen.blit(startbutton, startbutton_rect.topleft)
+        pygame.display.flip()
+
+        while logotime:
+            for event in pygame.event.get():
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if startbutton_rect.collidepoint(event.pos):
+                        logotime = False
+                elif event.type == pygame.KEYDOWN:
+                    logotime = False
+
+
+
 
 running = True
 while running:
@@ -93,6 +119,8 @@ while running:
         ball_speed_x = -ball_speed_x
     if ball_y - ball_radius < 0 or ball_y + ball_radius > HEIGHT:
         ball_speed_y = -ball_speed_y
+    if ball_y + ball_radius > HEIGHT:  # Check if the ball touches the ground
+            running = False
 
     # Check collision with player (paddle)
     paddle_rect = pygame.Rect(playerx, playery, paddle_width, paddle_height)

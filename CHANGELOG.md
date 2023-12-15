@@ -1,5 +1,5 @@
 Changes: 
 =======
 
-Completely rewrote source code.
-Make file structure more advanced.
+Added the title screen.
+Added game over mechanic.
