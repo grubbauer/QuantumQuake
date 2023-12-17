@@ -7,6 +7,8 @@ import sys
 import time
 import pygame
 import pygame.mixer as mixer 
+import logging
+from colorlog import ColoredFormatter
 
 # Initialising the programms
 pygame.init()
@@ -25,9 +27,36 @@ movingdown = False
 playerx = WIDTH // 2
 playery = HEIGHT // 1.5
 
+
+
+# Configure logging settings
+logging.basicConfig(filename='resources/log/BlockBuster.log', level=logging.DEBUG, format='%(log_color)s[%(asctime)s]%(reset)s - [%(levelname)s] - [%(message)s]')
+
+# Create a console handler and set the level to DEBUG
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+
+# Create a colored formatter with date and level colored appropriately, and add it to the console handler
+formatter = ColoredFormatter(
+    '%(purple)s[%(asctime)s]%(reset)s - %[(log_color)s%(levelname)s%(reset)s] - [%(message)s]',
+    datefmt='%d-%m-%Y %H:%M:%S',
+    log_colors={
+        'DEBUG': 'cyan',
+        'INFO': 'green',
+        'WARNING': 'yellow',
+        'ERROR': 'red',
+        'CRITICAL': 'bold_red'
+    },
+    
+)
+
+console_handler.setFormatter(formatter)
+
+# Add the console handler to the root logger
+logging.getLogger().addHandler(console_handler)
+
 # Debug elements
-debug = []
-debug.append(f"WINDOW: {WIDTH, HEIGHT}")
+logging.debug("WindowsHeight: WIDTH:%s, HEIGHT:%s", WIDTH, HEIGHT)
 
 # Adding the img and audio files
 playertexture = pygame.image.load("resources/sprites/player/Sprite-0001-test.png")
@@ -89,7 +118,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            print(f"DEBUG: {f"{debug}"}")
         # Condition Loop 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
