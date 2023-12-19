@@ -1,4 +1,3 @@
 Changes: 
 =======
 
-New logging feature.
