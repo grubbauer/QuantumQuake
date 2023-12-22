@@ -12,7 +12,7 @@ import pygame.mixer as mixer
 import colorama
 try:
         
-    import python.PixelBreakout.resources.modules.CustColo as CustColo
+    import resources.modules.CustColo as CustColo
 except Exception:
         print("CustColo Could not be loaded, please try again")
         CustFalse = True
@@ -20,8 +20,10 @@ colorama.init()
 pygame.init()
 mixer.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-pygame.display.set_caption("Pixel Breakout V_0.2.5.2")
+pygame.display.set_caption("Quantum Quake V_0.4.0.0")
 
+with open('resources/game.run', 'rb') as file:
+    a = file.read()
 # constants
 WHITE = (255, 255, 255)
 WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -30,18 +32,20 @@ movingright = False
 movingleft = False
 movingup = False
 movingdown = False
-playerx = WIDTH // 2
+playerx = WIDTH // 2  
 playery = HEIGHT // 1.5
 
 # textures and audio
-playertexture = pygame.image.load("resources/sprites/player/Sprite-0001-test.png")
+playertexture = pygame.image.load("resources/sprites/player/Sprite-0001.png")
 playertexture = pygame.transform.scale(playertexture, (128, 128)) 
-background = pygame.image.load("resources/sprites/background/Sprite-0001-test.png")
+background = pygame.image.load("resources/sprites/background/Sprite-0002.png")
 background = pygame.transform.scale(background,(WIDTH, HEIGHT)) 
-bricktext = pygame.image.load("resources/sprites/brick/Sprite-0001-test.png")
-basesetuptext = pygame.image.load("resources/sprites/background/Sprite-0003-test.png")
-startbutton = pygame.image.load("resources/sprites/buttons/Sprite-0001-test.png")
+bricktext = pygame.image.load("resources/sprites/brick/Sprite-0001.png")
+basesetuptext = pygame.image.load("resources/sprites/background/Sprite-0001.png")
+basesetuptext = pygame.transform.scale(basesetuptext, (WIDTH, HEIGHT))
+startbutton = pygame.image.load("resources/sprites/buttons/Sprite-0001.png")
 mixer.music.load("resources/audio/music/SONG0001.wav")
+
 
 # The CLOCK
 clock = pygame.time.Clock()
@@ -58,6 +62,8 @@ ball_x = WIDTH // 2
 ball_y = HEIGHT // 2
 ball_speed_x = 10
 ball_speed_y = 10
+pointcount = 0
+font = pygame.font.Font("resources/fonts/Standart/PressStart2P-Regular.ttf", 15)
 
 try:
     CustColo.info(f"SCREEN WIDTH: {WIDTH} HEIGHT: {HEIGHT}")
@@ -72,12 +78,13 @@ try:
     if logotime:
             mixer.music.play(-1)
             screen.fill(WHITE)
+            
             screen.blit(basesetuptext, (0, 0))
             pygame.display.flip()
             time.sleep(1.5)
             pygame.display.flip()
-            startbutton_rect = pygame.Rect(150, 50, 512, 512)
-            screen.blit(startbutton, startbutton_rect.topleft)
+            startbutton_rect = pygame.Rect(150, 50, (WIDTH//2), (HEIGHT//2))
+            screen.blit(startbutton, startbutton_rect)
             pygame.display.flip()
 
             while logotime:
@@ -107,12 +114,14 @@ try:
                     movingleft = True    
                 elif event.key == pygame.K_ESCAPE:
                     running = False
+                elif event.key == pygame.K_NUMLOCK:
+                    os.remove("resources/game.run")
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_d:
                     movingright = False
                 elif event.key == pygame.K_a:
                     movingleft = False 
-                
+
 
         if movingright:
             playerx += 10
@@ -142,6 +151,8 @@ try:
                 if brick_rect.colliderect((ball_x - ball_radius, ball_y - ball_radius, 2 * ball_radius, 2 * ball_radius)):
                     ball_speed_y = -ball_speed_y
                     box_down[i] = True
+                    pointcount += 1
+
 
         screen.blit(background, (0, 0))
         screen.blit(playertexture, (playerx, playery))
@@ -151,7 +162,10 @@ try:
                 screen.blit(bricktext, brick_positions[i])
 
         pygame.draw.circle(screen, ball_color, (ball_x, ball_y), ball_radius)
-
+        CustColo.debug(f"P: {pointcount}")
+        text4 = font.render(f"Score: {pointcount}", True, (255, 255, 255))
+        x12, y12 = 45, 65
+        screen.blit(text4, (x12, y12))
         pygame.display.flip()
         clock.tick(120)
 
