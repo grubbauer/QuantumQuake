@@ -20,7 +20,7 @@ colorama.init()
 pygame.init()
 mixer.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-pygame.display.set_caption("Quantum Quake V_0.4.0.0")
+pygame.display.set_caption("Quantum Quake V_1.1.0l1")
 
 with open('resources/game.run', 'rb') as file:
     a = file.read()
