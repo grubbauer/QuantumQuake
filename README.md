@@ -1,7 +1,9 @@
-Blockbuster 
+Blockbuster (development branch)
 ===========
 A python varitation of the game Pixel Breakout
 
 
-To run it, install the pygame module via pip and
-run the project
+This is the development branch of the Blockbuster project.
+This directory is a W.I.P, so it's probably best if you
+use the master branch version.
+

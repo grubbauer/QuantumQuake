@@ -20,7 +20,7 @@ colorama.init()
 pygame.init()
 mixer.init()
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-pygame.display.set_caption("Quantum Quake V_1.0")
+pygame.display.set_caption("Quantum Quake V_0.4.0.0")
 
 with open('resources/game.run', 'rb') as file:
     a = file.read()
@@ -44,7 +44,8 @@ bricktext = pygame.image.load("resources/sprites/brick/Sprite-0001.png")
 basesetuptext = pygame.image.load("resources/sprites/background/Sprite-0001.png")
 basesetuptext = pygame.transform.scale(basesetuptext, (WIDTH, HEIGHT))
 startbutton = pygame.image.load("resources/sprites/buttons/Sprite-0001.png")
-mixer.music.load("resources/audio/music/SONG0001.wav")
+startmusic = "resources/audio/music/Start/Let_The_End_Begin/Let_The_End_Begin.wav"
+mixer.music.load(f"{startmusic}")
 
 
 # The CLOCK
@@ -60,13 +61,13 @@ ball_radius = 20
 ball_color = (255, 0, 0)  # Red.
 ball_x = WIDTH // 2
 ball_y = HEIGHT // 2
-ball_speed_x = 10
-ball_speed_y = 10
+ball_speed_x = 5
+ball_speed_y = 5
 pointcount = 0
 font = pygame.font.Font("resources/fonts/Standart/PressStart2P-Regular.ttf", 15)
 
 try:
-    CustColo.info(f"SCREEN WIDTH: {WIDTH} HEIGHT: {HEIGHT}")
+    CustColo.info(f"")
 except Exception as e:
     if CustFalse == False:
         while True:
@@ -162,7 +163,6 @@ try:
                 screen.blit(bricktext, brick_positions[i])
 
         pygame.draw.circle(screen, ball_color, (ball_x, ball_y), ball_radius)
-        CustColo.debug(f"P: {pointcount}")
         text4 = font.render(f"Score: {pointcount}", True, (255, 255, 255))
         x12, y12 = 45, 65
         screen.blit(text4, (x12, y12))

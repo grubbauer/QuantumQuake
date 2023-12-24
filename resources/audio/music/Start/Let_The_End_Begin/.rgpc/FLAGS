@@ -1,0 +1,1 @@
+-win -exec -.exe -ucomp -ndate -sign -64 -wineexec 
